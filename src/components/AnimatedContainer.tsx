@@ -55,12 +55,14 @@ export function animatedValueFor(
   damping: number
 ) {
   const boundValue = (val: number) => bound(val, 0, 2);
-  const { dy } = gesture;
+  const { dy, numberActiveTouches } = gesture;
 
   switch (position) {
     case 'bottom':
+      if (!numberActiveTouches) return boundValue(0)
       return boundValue(1 - dy / damping);
     case 'top':
+      if (!numberActiveTouches) return boundValue(0)
       return boundValue(1 + dy / damping);
     default:
       throw new Error(`Toast position: ${position} not implemented`);
